@@ -1,0 +1,11 @@
+---
+- name: Adding nodes to k8s Master
+  hosts: node
+  gather_facts: no
+  tasks:
+     - name: Running Modprobe
+       script: modprobe.sh
+       tags: modprobe
+     - name: Joining nodes to cluster
+       script: token.sh
+       tags: nodejoin

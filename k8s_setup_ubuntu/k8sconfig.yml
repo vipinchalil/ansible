@@ -1,0 +1,25 @@
+---
+- hosts: all
+  gather_facts: no
+  sudo: yes
+  pre_tasks:
+  - name: install python
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+- name: K8s initial setup.
+  hosts: all
+  tasks:
+     - name: Installing Docker
+       script: docker.sh
+       tags: docker
+     - name: Insttalling Kubernetes components
+       script: kubernetes.sh
+       tags: k8basic
+- name: K8s Master setup
+  hosts: master
+  gather_facts: no
+  tasks:
+     - name: Setting up Master node
+       script: kubeMaster.sh
+       register: output
+       tags: k8master
+     - debug: var=output.stdout_lines

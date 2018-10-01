@@ -1,0 +1,16 @@
+Create a group (here its jumpbox)
+
+root@MyUbuntu:~# cat /etc/ansible/hosts 
+$[jumpbox]
+10.0.1.121
+
+Create a group_vars file
+
+root@MyUbuntu:~# ls /etc/ansible/group_vars/
+jumpbox.yml
+
+Define the jump server details in the host_vars folder
+
+root@MyUbuntu:~$ cat /etc/ansible/group_vars/jumpbox.yml 
+---
+ansible_ssh_common_args: '-o ProxyCommand="ssh -i <path of pem file> -W %h:%p -q <user@bastion_host>"'

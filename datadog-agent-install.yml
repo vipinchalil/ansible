@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: no
+  sudo: yes
+  pre_tasks:
+  - name: install python
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  - name: Gathering Facts now
+    setup:
+  roles:
+    - { role: Datadog.datadog, become: yes }
+  vars:
+    datadog_api_key: "7c86e90f92f277b95e6d27ff4c270954"

@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: no
+  sudo: yes
+  pre_tasks:
+   - name: Installing python dependencies
+     raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal && apt install -y python-boto3) 
+  tasks:
+   - name: Downloading and installing file from S3
+     s3:
+      bucket: surennew
+      object: chrome.deb
+      dest: /tmp/chrome.deb   #Enter the path along with the file name
+      mode: get
+      aws_access_key: XXXXXXXXXXXXX
+      aws_secret_key: XXXXXXXXXXXXXXXXXXXXXXXX
